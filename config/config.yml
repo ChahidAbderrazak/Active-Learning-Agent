@@ -8,9 +8,9 @@ DATASET: # Drone imagery
   masks_folder: "data/segmentation/Masks"
   mask_extension: ".png"
   split_size: 0.7 # the percentage of splitting the the the whole data <train+test+deploy>. Default 0.8  :  80%
-  imgSizes_X: 32 # resizing width
-  imgSizes_Y: 32 # resizing hight
-  dev: True
+  imgSizes_X: 256 # resizing width
+  imgSizes_Y: 256 # resizing hight
+  dev: False
   dev_size: 200
 
 DETECTION:
@@ -37,7 +37,7 @@ TRAIN:
   Min_nb_img_per_class: 5 # minimal number of images per class to stat the training
   split_size: 0.8 # the percentage of splitting of the training/Validation sets.  Default 0.7  :  70%
   nb_folds: 1 # number of time to split and train the model on the training set, stored in <workspace + train>,  will be repeated on the training set with shuffling. Default 2
-  num_epoch: 10 #0 # number of epochs to train to model for every epoch. Default 500
+  num_epoch: 100 #0 # number of epochs to train to model for every epoch. Default 500
   num_workers: 0 # number of parallel workers. Default 0
   loss_criterion: "crossEntropy" # loss criteria
   lr: 0.0001 # learning rate

@@ -2,11 +2,14 @@ import os
 
 import setuptools
 
-PROJECT_NAME = "deep learning project"
+PROJECT_NAME = "Active learning project"
 VERSION = "1.0"
 AUTHOR_USER_NAME = "Abderrazak Chahid"
 AUTHOR_EMAIL = "abderrazak.chahid@gmail.com"
-PROJECT_DESCRIPTION = "Train deep learning model  and deploy using Flask API server"
+PROJECT_DESCRIPTION = (
+    "Train/Deploy active deep learning models"
+    + " for classification, object detection"
+)
 PROJECT_URL = ""
 
 
