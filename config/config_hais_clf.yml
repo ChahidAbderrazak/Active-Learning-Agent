@@ -1,0 +1,67 @@
+DATASET: # Drone imagery
+  UseCase_Name: "cadcd"
+  raw_data_folder: "data/raw-data" 
+  processed_data_folder: "data/processed-dataset" #
+  images_folder: "data/segmentation/Images"
+  image_extension: ".jpg"
+  ext_list: [".tif", ".tiff", ".jpg", ".jpeg", ".png"] # supported raw data images format for  classification
+  masks_folder: "data/segmentation/Masks"
+  mask_extension: ".png"
+  split_size: 0.7 # the percentage of splitting the the the whole data <train+test+deploy>. Default 0.8  :  80%
+  imgSizes_X: 128 # resizing width
+  imgSizes_Y: 128 # resizing hight
+  dev: False
+  dev_size: 500
+
+DETECTION:
+  mask_th: 0.85 # Mask refinement threshold
+  verbose: 0 # display the results
+  erosion_tol: 2 # erosion tolerance in mask refinement
+  bs_level: 0 # background removal type
+  nb_Level: 3 # number of defect categories
+
+ANNOTATION:
+  save_annotation: True
+  annotation_directory: "data/processed-dataset"
+  CLASS_NAMES: ["No-Fire", "Fire"]
+  Min_object_area_percentage:
+    20 # defines the minimal box area ratio,  compared to the total mask area to be
+    #considered for annotation.the smaller boxes will be ignored  with_masks: True
+
+MODEL:
+  clf_name: "CNN-MClss" # Classification model
+  obj_name: "RestNet50" # Object detection model
+  seg_name: "TBD" # Segmentation model
+
+TRAIN:
+  Min_nb_img_per_class: 5 # minimal number of images per class to stat the training
+  split_size: 0.8 # the percentage of splitting of the training/Validation sets.  Default 0.7  :  70%
+  nb_folds: 1 # number of time to split and train the model on the training set, stored in <workspace + train>,  will be repeated on the training set with shuffling. Default 2
+  num_epoch: 100  # number of epochs to train to model for every epoch. Default 500
+  num_workers: 0 # number of parallel workers. Default 0
+  loss_criterion: "crossEntropy" # loss criteria
+  lr: 0.0001 # learning rate
+  batch_size: 5 # batch size
+  optimizer: "SGD" # 'adam' #     # optimizer to adjust thr Network weights
+  es_patience_ratio: 10 # ~10 Ratio of epochs to be used as early stopping criterion  (num_epoch/es_patience_ratio)
+  transfer_learning: True # load previously trained model
+  N_split: 1 # number of times the num_epoch will run
+  lr_scheduling: True # enable learning rate (lr) decaying wrt training epochs
+  step_size: 3 # lr_scheduling param1
+  gamma: 0.1 # lr_scheduling param2
+  momentum: 0.9 # learning momentum
+  weight_decay: 0.0005 # learning decay weight
+
+THRESHOLD:
+  ds_max: 1000
+  Cmin: 0.7
+  Cmax: 0.98
+  Ct: 0.96
+  IOU: 0.7
+  IOU_seg: 0.7
+  detection_threshold: 0.5
+
+OUTPUTS:
+  workspace: "logs/workspace" # processed data destination
+  artifact_directory: "logs/" # output results destination
+  model_dst: "models" # folder where the trained model will be saved in the <dst_directory>
